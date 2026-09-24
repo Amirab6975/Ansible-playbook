@@ -5,3 +5,7 @@
     - name: Print Hello Ansible
       debug:
         msg:  "Hello Ansible"
+
+    - name: Exit ansible
+      fail:
+        msg:  "Exited :)"
