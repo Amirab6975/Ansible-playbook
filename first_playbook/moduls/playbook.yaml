@@ -1,0 +1,13 @@
+---
+- name: Probing Module
+  hosts:  kuber
+  tasks:
+    - name: list file & directory
+      shell:
+        cmd:  ls
+        chdir:  /home/
+      register: files
+
+    - name: Show output
+      debug:
+        var:  files.stdout_lines
