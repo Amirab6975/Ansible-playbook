@@ -1,6 +1,6 @@
 ---
 - name: This Is First File Of Playbook
-  hosts:  localhost
+  hosts:  kuber
   tasks:
     - name: Print Hello Ansible
       debug:
