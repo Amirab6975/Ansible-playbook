@@ -6,11 +6,15 @@
       debug:
         msg:  "Hello Ansible"
 
-    - name: "Get Hostname"
-      shell:  hostname
+#    - name: "Get Hostname with shell"
+#      shell:  hostname
+#      register: output
+          
+    - name: "Get Hostname with command"
+      command:  hostname
       register: output
 
-    - name: Print Hello Ansible
+    - name: Print Variable Value
       debug:
          var:  output.stdout_lines
 
