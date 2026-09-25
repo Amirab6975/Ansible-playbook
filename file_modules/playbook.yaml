@@ -1,0 +1,35 @@
+---
+- name: Use File Module
+  hosts:  all
+# Run Tasks with root privelleg, if write in this block run all tasks with root, if write in tasks block just run task  
+  become: yes
+  vars:
+    base_dir: /tmp/
+  tasks:
+    - name: Change OwnerShip
+      file:
+        path:   "{{ base_dir  }}/ansibleDir"
+        owner:  root
+        group:  root
+        state:  directory
+
+
+    - name: Create File
+      file: 
+        path: "{{ base_dir }}/test-f1.txt"
+        mode: '0655'
+        state:  touch # Create File  
+
+    - name: Create Directory
+      file:
+        path: "{{ base_dir }}/ansibleDir"
+        mode: '0755'
+        owner:  root
+        group:  root  
+        state:  directory # Create Directory
+
+    - name: Remove File
+      file:
+        path: "{{ base_dir }}/test-f1.txt"
+        mode: '0655'
+        state:  absent # Remove File/Directory  
