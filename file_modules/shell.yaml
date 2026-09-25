@@ -1,0 +1,19 @@
+---
+- name: Intro Of Modules
+  hosts:  all
+  vars:
+    base_dir: /tmp/
+  tasks:
+    - name: Run A Command
+      command:
+        cmd:  touch /root/new.txt
+      ignore_errors: yes
+      register: output
+
+    - name: check the result
+      debug:
+        var:  output
+      when: output.rc != 0
+
+
+
