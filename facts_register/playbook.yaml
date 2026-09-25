@@ -1,0 +1,7 @@
+---
+- name: Ansible Facts & Register
+  hosts:  localhost
+  tasks:
+    - name: Show Facts
+      debug:  
+        var:  ansible_facts.distribution  # ansible_facts | to_nice_yaml ==> filter
