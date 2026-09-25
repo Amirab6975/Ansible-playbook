@@ -1,0 +1,9 @@
+---
+- name: Variable Intro
+  hosts:  all
+  vars:
+    favcolor: red
+  tasks:
+    - name: Show Vars
+      debug:
+        msg:  "your fav color ins ==> {{favcolor}}"
