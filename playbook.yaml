@@ -4,4 +4,4 @@
   tasks:
     - name: Show Facts
       debug:  
-        var:  ansible_facts
+        var:  ansible_facts.distribution
