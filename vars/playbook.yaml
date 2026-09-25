@@ -1,9 +1,28 @@
 ---
 - name: Variable Intro
   hosts:  all
-  vars:
-    favcolor: red
+    #  vars:
+    #    favcolor: red
+  vars_files:
+    - ./vars.yaml
   tasks:
-    - name: Show Vars
+    - name: Show Vars1 (Simple)
       debug:
-        msg:  "your fav color ins ==> {{favcolor}}"
+        msg:  "your fav color ins ==> {{ favcolor }}"
+
+    - name: Show Vars2 (Dict)
+      debug:
+        msg:  "your fav team in iran ==> {{ favteams.Iran }}"
+
+    - name: Show Vars3 (Dict)
+      debug:
+        msg:  "your fav team in england ==> {{ favteams.England }}"
+
+    - name: Show Vars4 (List)
+      debug:
+        msg:  "your server  ==> {{ servers[0] }}"
+
+    - name: Show Vars5 (Mixed Tow Dict)
+      debug:
+        msg:  "mixed tow dict ==> {{ favteams | combine(favdata) }}"
+

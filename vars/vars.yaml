@@ -1,0 +1,17 @@
+---
+
+favcolor:  "red"
+
+
+favteams:
+  Iran:  "PERS"
+  England:  "CITI"
+
+favdata:
+  server1:  "FOO"
+  server2:  "APPLE"
+
+servers:
+  - worker1
+  - ns1
+
