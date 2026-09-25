@@ -1,7 +1,34 @@
 ---
 - name: Ansible Facts & Register
   hosts:  localhost
+  vars: 
+    dict1:  
+      name: "Bahman"
+      age:  10
+# if we have 'N' dict and have same keys, when combine it, print a last value of key in dict
+    dict2:
+      name: "Amir"
+
   tasks:
     - name: Show Facts
       debug:  
         var:  ansible_facts.distribution  # ansible_facts | to_nice_yaml ==> filter
+
+
+    - name: New Dict Combination & Save it
+      set_fact:
+        new_dict: "{{dict1 | combine(dict2)}}"
+
+    - name: Show New Dict
+      debug:
+        msg:  "New Dict Is ==> {{ new_dict  }}"
+
+
+    - name: List STH
+      shell:
+        cmd:  ls /home/
+      register: output
+
+    - name: Show output
+      debug:
+        msg:  "output is: {{ output.stdout_lines }}"
