@@ -12,7 +12,8 @@
         owner:  root
         group:  root
         state:  directory
-
+      ignore_errors: yes # if tasks get error, ignore it 
+      register: output
 
     - name: Create File
       file: 
@@ -33,3 +34,8 @@
         path: "{{ base_dir }}/test-f1.txt"
         mode: '0655'
         state:  absent # Remove File/Directory  
+
+    - name: Show Change OwnerShip OutPut
+      debug:
+        var:  output
+      when: output.failed
