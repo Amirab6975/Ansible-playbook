@@ -1,7 +1,0 @@
----
-- name: Ansible Facts & Register
-  hosts:  localhost
-  tasks:
-    - name: Show Facts
-      debug:  
-        var:  ansible_facts.distribution
