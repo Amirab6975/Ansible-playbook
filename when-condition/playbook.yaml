@@ -2,7 +2,8 @@
 - name: Intro Of When Conditions
   hosts:  webserver
   vars:
-    update: false
+#    update: false
+    nginx: false
   tasks:
     - name: Show Ansible Facts
       debug:
@@ -11,7 +12,7 @@
     - name: Update apt Packages With OR Operator
       apt:
         update_cache: yes
-      when: ansible_facts.os_family == "Debian" or update
+      when: ansible_facts.os_family == "Debian" or update  
 
 # You Can Use This Syntax When You Use AND Operator
     - name: Update apt Packages With And ( List ) Operator
@@ -19,10 +20,10 @@
         update_cache: true
       when:
         - ansible_facts.os_family == "Debian"
-        - update
+        - update 
 
 
     - name: Update yum Packages With AND Operator
       dnf:
         update_cache: yes
-      when: ansible_facts.os_family == "RedHat" and update
+      when: ansible_facts.os_family == "RedHat" and update # | bool ==> use this when pass the variable with -e in Ad-Hoc
