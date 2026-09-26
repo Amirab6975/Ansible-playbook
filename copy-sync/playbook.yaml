@@ -15,3 +15,16 @@
         owner:  root
         group:  root
         mode: "0644"
+
+    - name: Remove test.txt
+      file:
+        path: "{{ target_dir }}/copy-sync/test.txt"
+        state:  absent
+
+    - name: Copy This Dir Exclud test.txt
+      ansible.posix.synchronize:
+        src:  "{{ home_dir  }}"
+        dest: "{{ target_dir }}"
+        rsync_opts:
+          - "--exclude=test.txt"
+
