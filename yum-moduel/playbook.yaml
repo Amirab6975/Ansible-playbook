@@ -1,0 +1,33 @@
+---
+- name: Intro To Yum with Nginx and NodeJS installation
+  hosts:  webserver
+  become: yes
+  tasks:
+#    - name: Update Yum Packages
+#      dnf:
+#        update_cache: yes
+
+#    - name: Check Nginx present or Not
+#      dnf:
+#       name: nginx
+#       state:  present
+#
+#    -  name: Install Nginx
+#       dnf:
+#         name: nginx
+#         state:  latest
+
+      - name: Install Package ( NodeJS )
+        dnf:
+          name: nodejs
+          state:  latest
+
+#      - name: Remove Package
+#        dnf:
+#         name: nodejs
+#         state:  absent
+
+
+#      - name: Remove Unnecessary Packages
+#        dnf:
+#          autoremove: yes
