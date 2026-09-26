@@ -2,11 +2,20 @@
 - name: Intro Of Extra Variable With When
   hosts:  webserver
   become: yes
-    #vars:
+  vars:
     #    DEBUG: yes
   tasks:
     - name: Show Debug Value If Exist
       debug:
         msg:  "This Is Value Of Debug => {{ DEBUG  }}"
-      when: DEBUG is define
+      when: DEBUG is defined
 
+    - name: Show Debug Value If Exist
+      debug:
+        msg:  "This Is Value Of Debug is undefined"
+      when: DEBUG is undefined
+
+    - name: Assign a Defult Value If Var Was Not Defined
+      debug:
+        msg:  "This Is Value Of Debug"
+      when: DEBUG | default(false)
