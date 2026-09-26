@@ -1,0 +1,28 @@
+---
+- name: Intro Of When Conditions
+  hosts:  webserver
+  vars:
+    update: false
+  tasks:
+    - name: Show Ansible Facts
+      debug:
+        var: ansible_facts
+
+    - name: Update apt Packages With OR Operator
+      apt:
+        update_cache: yes
+      when: ansible_facts.os_family == "Debian" or update
+
+# You Can Use This Syntax When You Use AND Operator
+    - name: Update apt Packages With And ( List ) Operator
+      apt:
+        update_cache: true
+      when:
+        - ansible_facts.os_family == "Debian"
+        - update
+
+
+    - name: Update yum Packages With AND Operator
+      dnf:
+        update_cache: yes
+      when: ansible_facts.os_family == "RedHat" and update
