@@ -1,0 +1,12 @@
+---
+- name: Intro Of Extra Variable With When
+  hosts:  webserver
+  become: yes
+    #vars:
+    #    DEBUG: yes
+  tasks:
+    - name: Show Debug Value If Exist
+      debug:
+        msg:  "This Is Value Of Debug => {{ DEBUG  }}"
+      when: DEBUG is define
+
