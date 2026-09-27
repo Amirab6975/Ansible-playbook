@@ -1,0 +1,30 @@
+---
+- name: Intro Of Loops In Ansible
+  hosts:  kuber
+  become: yes
+  vars_files:
+    - "vars.yaml"
+  tasks:
+    - name: Create List Of Sudoers
+      user:
+        name: "{{ item  }}"
+        state:  present
+        shell:  /bin/bash
+        group:  wheel
+      loop: "{{ users }}"
+        # One Type Is This To Get Name From vars.yaml Up ( Clean )
+        # One Type Is This Type To Give Name Down ( Not Clean  )
+        #        - ali
+        #        - hamid
+        #        - amir
+        #        - hossein
+
+        
+    - name: Create List Of Sudoers
+      user:
+        name: "{{ item  }}"
+        state:  present
+        shell:  /bin/bash
+        group:  wheel
+      with_items: 
+        - "{{ users }}"
