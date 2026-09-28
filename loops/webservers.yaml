@@ -2,6 +2,7 @@
 - name: Started Mini Project With Loop
   hosts:  webserver
   become: yes
+  gather_facts: no
   vars_files:
     - "vars.yaml"
   tasks:
@@ -21,6 +22,8 @@
         state:  "{{ item.state }}"
         enabled:  "{{ item.enabled }}"
       loop: "{{ services.webservers }}"
+      loop_control:
+        label:  " {{ item.name  }} is the package name"
       
     - name: Get The Localhost Index
       get_url:
