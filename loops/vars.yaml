@@ -4,3 +4,21 @@ users:
   - hossein
   - amir
   - hamid
+
+group_list:
+  - dev
+  - prod
+
+
+users_dict:
+  developer:
+    name: hamid
+    group:  dev
+  devops:
+    name: ali
+    group:  prod
+
+
+packages:
+  - httpd
+  - nginx

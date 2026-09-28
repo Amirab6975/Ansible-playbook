@@ -1,0 +1,26 @@
+---
+- name: Intro Of Loops In Ansible
+  hosts:  kuber
+  become: yes
+  vars_files:
+    - "vars.yaml"
+  tasks:
+    - name: Create Groups
+      group:
+        name: "{{ item  }}"
+        state:  present
+      loop: "{{ group_list }}"
+
+    - name: Show Users_Dict
+      debug:
+        msg:  "{{ users_dict | dict2items }}" 
+
+    - name: Create List Of Users With Groups
+      user:  
+        name: "{{ item.value.name }}" 
+        state:  present
+        shell:  /bin/bash
+        group: "{{ item.value.group }}"
+      loop: "{{ users_dict | dict2items }}" 
+      # Or => {'name':'ali', 'group':'devops''}
+      # Or => "{{ lookup('dict', users_dict) }}"
