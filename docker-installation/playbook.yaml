@@ -1,0 +1,79 @@
+---
+- name: Docker Installation Task ( Rocky Linux )
+  hosts:  docker
+  become: yes
+  vars_files:
+    - "vars.yaml"
+  tasks:
+    - name: Update The Target Server
+      dnf:
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+         
+    - name: Remove The Old Packages For Docker If Exist
+      dnf:
+        name: "{{ item  }}"
+        state:  absent
+      loop: "{{ remove_pkg }}"
+      when: ansible_os_family == "RedHat"
+
+    - name: Remove Unnecessary Packages
+      dnf:
+        autoremove: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Install dnf Plugins
+      dnf:
+        name: "{{ item  }}"
+        state: present
+      loop: "{{ dnf_plugins  }}"
+      when: ansible_os_family == "RedHat"
+
+    - name: Add A Docker Repository
+      yum_repository:
+        name: docker-ce-stable
+        description: "Docker CE Stable - $basearch"
+        baseurl: "https://download.docker.com/linux/centos/$releasever/$basearch/stable"
+        gpgcheck: true
+        gpgkey: "https://download.docker.com/linux/centos/gpg"
+        enabled: true
+      when: ansible_os_family == "RedHat"
+
+    - name: Install Docker
+      dnf:
+        name: "{{ item  }}"
+        state:  present
+      loop: "{{ docker_pkg  }}"
+      when: ansible_os_family == "RedHat"
+
+
+    - name: Started Docker Service
+      service:
+        name: docker
+        state:  started
+        enabled:  "{{ docker_service_enabled }}"
+
+    - name: Add User To A Docker Group
+      user:
+        name: "{{ docker_user  }}"
+        groups: docker
+        append: yes
+      when: docker_user != " "
+
+    - name: Verify DoCker Installation
+      command:  docker --version
+      register: docker_version
+
+    - name: Verify Docker-Compose Installation
+      command:  docker compose version
+      register: docker_compose_version
+
+    - name: Print Docker Version
+      debug:
+        msg: "Docker Version is => {{ docker_version.stdout  }}"
+
+    - name: Print Docker-compose Version
+      debug:
+        msg: "Docker Version is => {{ docker_compose_version.stdout  }}"
+
+          
