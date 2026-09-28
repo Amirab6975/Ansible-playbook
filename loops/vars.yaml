@@ -22,3 +22,18 @@ users_dict:
 packages:
   - httpd
   - nginx
+
+
+
+services:
+  webservers:
+    - name: httpd
+      state:  stopped
+      enabled: no
+
+    - name: nginx
+      state:  restarted
+      enabled:  yes
+
+url:  "http://localhost:80"
+file_dest:  "/root/index.html"

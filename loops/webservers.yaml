@@ -1,0 +1,40 @@
+---
+- name: Started Mini Project With Loop
+  hosts:  webserver
+  become: yes
+  vars_files:
+    - "vars.yaml"
+  tasks:
+    - name:
+      dnf:
+        name: "{{ item  }}"
+        state:  present
+      loop: "{{ packages }}"
+
+    - name: Show Services Variable
+      debug:
+        msg:  "{{ services.webservers }}"
+
+    - name: Make Sure Services Are On The Demanded state
+      service:
+        name: "{{ item.name }}"
+        state:  "{{ item.state }}"
+        enabled:  "{{ item.enabled }}"
+      loop: "{{ services.webservers }}"
+      
+    - name: Get The Localhost Index
+      get_url:
+        url:  "{{ url }}"
+        dest: "{{ file_dest }}"
+
+    - name: Make Sure File Was Absent On Localhost
+      file:
+        path: "{{ playbook_dir }}/index.html"
+        state:  absent
+      delegate_to:  localhost
+          
+    - name: Fetch The Localhost Index File
+      fetch:
+        src:  "{{ file_dest }}"
+        dest: "{{ playbook_dir }}/index.html"
+        flat: yes
