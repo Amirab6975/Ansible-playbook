@@ -1,0 +1,10 @@
+- name: down Promethues Docker Compose & Test It
+  hosts:  webserver
+  vars_files:
+    - "./vars.yaml"
+  become: yes
+  tasks:
+
+    - name: Down Deploy Promethues Docker Compose
+      command: docker compose -f "{{ compose_file }}" down
+

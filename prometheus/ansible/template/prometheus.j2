@@ -1,0 +1,25 @@
+services:
+  prometheus:
+    container_name: {{ container_name | default("prometheus-main") }}
+    image: {{ image_name | default("prom/prometheus:v2.46.0") }}
+    network_mode: {{ network_mode | default("host") }}
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/share/prometheus/console/libraries_web
+      - --web.enable-lifecycle
+    volumes:
+      - {{ prometheus_data_volume | default("prometheus_data") }}:/prometheus
+      - type: "bind"
+        source: {{ prometheus_config_source | default("../prometheus-config/") }}
+        target: /etc/prometheus
+        read_only: true
+        bind:
+          propagation: shared
+        consistency: cached
+    #restart: {{ restart_policy | default("always") }}
+    restart: {{ restart_policy if restart_policy else 'always' }}
+
+volumes:
+  {{prometheus_data_volume | default("prometheus_data") }}:
+

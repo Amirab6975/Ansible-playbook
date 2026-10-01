@@ -1,0 +1,35 @@
+---
+- name: Up Promethues Docker Compose & Test It
+  hosts:  webserver
+  vars_files:
+    - "./vars.yaml"
+  become: yes
+  tasks:
+    - name: Copy Base Directory
+      ansible.posix.synchronize:
+        src:  "{{ base_dir }}"
+        dest:  "{{ dst_dir }}"
+        rsync_opts:
+          - "--exclude=ansible/"
+    
+    - name: Check Docker Exist
+      command:  which docker
+      register: result
+
+    - template:
+        src:  template/prometheus.j2
+        dest: "{{compose_file}}"
+
+    - name: Deploy Promethues Docker Compose
+      command: docker compose -f "{{ compose_file }}" up -d 
+      when: result.rc ==  0
+
+
+    - name: Ensure The Container Is runnig
+      docker_container:
+        name: "{{ container_name | default('prometheus-main')  }}"
+      register: container
+
+    - fail:
+        msg:  "Container Isnt Running"
+      when: not container.container.State.Running 

@@ -1,0 +1,6 @@
+base_dir: "{{ playbook_dir | dirname }}"
+dst_dir:  "/root"
+home_dir: "{{ dst_dir  }}/prometheus"
+compose_file: "{{ home_dir  }}/docker/prometheus.yaml"
+container_name: prometheus
+restart_policy: '{{ lookup("env", "RESTART")  }}'
