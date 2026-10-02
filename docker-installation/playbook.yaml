@@ -76,4 +76,3 @@
       debug:
         msg: "Docker Version is => {{ docker_compose_version.stdout  }}"
 
-          
