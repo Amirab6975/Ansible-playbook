@@ -1,0 +1,6 @@
+---
+# tasks file for roles
+
+- name: debug first task
+  debug:
+    msg: "{{ role_path  }}"
