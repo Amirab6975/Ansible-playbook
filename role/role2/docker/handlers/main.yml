@@ -1,0 +1,7 @@
+---
+- name: Started Docker Service
+  service:
+    name: docker
+    state:  started
+    enabled:  "{{ docker_service_enabled }}"
+

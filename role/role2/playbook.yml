@@ -1,0 +1,6 @@
+---
+- name:  Promethues Roles
+  hosts:  webserver
+  become: true
+  roles:
+    - docker
