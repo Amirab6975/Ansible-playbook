@@ -1,0 +1,14 @@
+---
+- name: Use Strategy
+  hosts: async
+  become: true
+  gather_facts: no
+  serial: "100%"
+  strategy: free
+  tasks:
+    - become_user:  "{{ansible_user}}"
+      shell:  bash -c "whoami"
+      register: test
+
+    - debug:
+        msg:  "{{test.stdout_lines}}"
