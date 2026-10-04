@@ -1,0 +1,14 @@
+---
+- name: 
+  hosts:  async
+  become: true
+  gather_facts: no
+  tasks:
+    - name: Play Async
+      command:  python3 -m http.server 8080
+      async:  300
+      poll: 0
+
+    - debug:
+        msg:  "Exit From Taks"
+
