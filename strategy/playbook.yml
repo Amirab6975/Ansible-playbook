@@ -1,6 +1,6 @@
 ---
 - name: Use Strategy
-  hosts: async
+  hosts: stra
   become: true
   gather_facts: no
   serial: "100%"
@@ -9,6 +9,9 @@
     - become_user:  "{{ansible_user}}"
       shell:  bash -c "whoami"
       register: test
+
+    - command:  python3 -m http.server 8272
+      when: inventory_hostname == "ns1"
 
     - debug:
         msg:  "{{test.stdout_lines}}"
